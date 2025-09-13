@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import '../services/auth_service.dart';
+import '../providers/user_provider.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -23,9 +24,13 @@ class _LoginScreenState extends State<LoginScreen> {
       appBar: AppBar(
         backgroundColor: Colors.brown[200],
         elevation: 0,
-        title: Text("Sign In",
-            style: GoogleFonts.poppins(
-                color: Colors.brown[800], fontWeight: FontWeight.bold)),
+        title: Text(
+          "Sign In",
+          style: GoogleFonts.poppins(
+            color: Colors.brown[800],
+            fontWeight: FontWeight.bold,
+          ),
+        ),
         iconTheme: IconThemeData(color: Colors.brown[800]),
       ),
       body: Center(
@@ -117,17 +122,23 @@ class _LoginScreenState extends State<LoginScreen> {
                     shadowColor: Colors.brown[300],
                   ),
                   onPressed: () async {
-                    final email = emailController.text;
-                    final pass = passController.text;
+                    final email = emailController.text.trim();
+                    final pass = passController.text.trim();
 
                     final authService = context.read<AuthService>();
                     final success = await authService.login(email, pass);
 
                     if (success) {
+                      // simpan email ke provider biar bisa dipakai global
+                      context.read<UserProvider>().setEmail(email);
+
                       ScaffoldMessenger.of(context).showSnackBar(
                         const SnackBar(
-                            content: Text("Login berhasil, selamat datang!")),
+                          content: Text("Login berhasil, selamat datang!"),
+                        ),
                       );
+
+                      // arahkan ke onboarding (bawa email ke arguments)
                       Navigator.pushReplacementNamed(
                         context,
                         '/onboarding',
@@ -136,7 +147,8 @@ class _LoginScreenState extends State<LoginScreen> {
                     } else {
                       ScaffoldMessenger.of(context).showSnackBar(
                         const SnackBar(
-                            content: Text("Email atau Password salah!")),
+                          content: Text("Email atau Password salah!"),
+                        ),
                       );
                     }
                   },

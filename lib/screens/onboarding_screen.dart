@@ -57,6 +57,24 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     }
   }
 
+  void nextPage() {
+    if (_currentIndex < pages.length - 1) {
+      _controller.nextPage(
+        duration: const Duration(milliseconds: 400),
+        curve: Curves.easeInOut,
+      );
+    }
+  }
+
+  void previousPage() {
+    if (_currentIndex > 0) {
+      _controller.previousPage(
+        duration: const Duration(milliseconds: 400),
+        curve: Curves.easeInOut,
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -74,14 +92,9 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
               // ✅ Greeting bar full width
               Container(
                 width: double.infinity,
-                padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 20),
-                decoration: const BoxDecoration(
-                  color: Colors.brown,
-                  borderRadius: BorderRadius.only(
-                    bottomLeft: Radius.circular(0),
-                    bottomRight: Radius.circular(0),
-                  ),
-                ),
+                padding:
+                    const EdgeInsets.symmetric(vertical: 16, horizontal: 20),
+                color: Colors.brown,
                 child: Center(
                   child: Text(
                     "${getGreeting()}, ${getUserName()} 👋",
@@ -94,57 +107,92 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                 ),
               ),
 
-              // ✅ PageView ditaruh di Expanded biar fleksibel
+              // ✅ PageView dengan tombol panah
               Expanded(
-                child: PageView.builder(
-                  controller: _controller,
-                  itemCount: pages.length,
-                  onPageChanged: (index) {
-                    setState(() {
-                      _currentIndex = index;
-                    });
-                  },
-                  itemBuilder: (context, index) {
-                    return Padding(
-                      padding: const EdgeInsets.all(20),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Container(
-                            height: 250,
-                            decoration: BoxDecoration(
-                              color: const Color.fromARGB(255, 149, 91, 70),
-                              borderRadius: BorderRadius.circular(24),
-                            ),
-                            child: ClipRRect(
-                              borderRadius: BorderRadius.circular(24),
-                              child: Image.asset(
-                                pages[index]["image"]!,
-                                fit: BoxFit.cover,
+                child: Stack(
+                  children: [
+                    PageView.builder(
+                      controller: _controller,
+                      itemCount: pages.length,
+                      onPageChanged: (index) {
+                        setState(() {
+                          _currentIndex = index;
+                        });
+                      },
+                      itemBuilder: (context, index) {
+                        return Padding(
+                          padding: const EdgeInsets.all(20),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Container(
+                                height: 250,
+                                decoration: BoxDecoration(
+                                  color:
+                                      const Color.fromARGB(255, 149, 91, 70),
+                                  borderRadius: BorderRadius.circular(24),
+                                ),
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(24),
+                                  child: Image.asset(
+                                    pages[index]["image"]!,
+                                    fit: BoxFit.cover,
+                                  ),
+                                ),
                               ),
-                            ),
+                              const SizedBox(height: 40),
+                              Text(
+                                pages[index]["title"]!,
+                                style: const TextStyle(
+                                  fontSize: 28,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              const SizedBox(height: 10),
+                              Text(
+                                pages[index]["subtitle"]!,
+                                textAlign: TextAlign.center,
+                                style: const TextStyle(
+                                  fontSize: 16,
+                                  color: Colors.black54,
+                                ),
+                              ),
+                            ],
                           ),
-                          const SizedBox(height: 40),
-                          Text(
-                            pages[index]["title"]!,
-                            style: const TextStyle(
-                              fontSize: 28,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          const SizedBox(height: 10),
-                          Text(
-                            pages[index]["subtitle"]!,
-                            textAlign: TextAlign.center,
-                            style: const TextStyle(
-                              fontSize: 16,
-                              color: Colors.black54,
-                            ),
-                          ),
-                        ],
+                        );
+                      },
+                    ),
+
+                    // ✅ Tombol kiri
+                    Positioned(
+                      left: 10,
+                      top: MediaQuery.of(context).size.height * 0.25,
+                      child: IconButton(
+                        onPressed: previousPage,
+                        icon: const Icon(Icons.arrow_back_ios),
+                        color: Colors.white,
+                        style: IconButton.styleFrom(
+                          backgroundColor: Colors.brown.withOpacity(0.8),
+                          shape: const CircleBorder(),
+                        ),
                       ),
-                    );
-                  },
+                    ),
+
+                    // ✅ Tombol kanan
+                    Positioned(
+                      right: 10,
+                      top: MediaQuery.of(context).size.height * 0.25,
+                      child: IconButton(
+                        onPressed: nextPage,
+                        icon: const Icon(Icons.arrow_forward_ios),
+                        color: Colors.white,
+                        style: IconButton.styleFrom(
+                          backgroundColor: Colors.brown.withOpacity(0.8),
+                          shape: const CircleBorder(),
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ),
 
@@ -154,12 +202,13 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                 children: List.generate(
                   pages.length,
                   (index) => Container(
-                    margin: const EdgeInsets.symmetric(
-                        horizontal: 4, vertical: 16),
+                    margin:
+                        const EdgeInsets.symmetric(horizontal: 4, vertical: 16),
                     width: _currentIndex == index ? 16 : 8,
                     height: 8,
                     decoration: BoxDecoration(
-                      color: _currentIndex == index ? Colors.brown : Colors.grey,
+                      color:
+                          _currentIndex == index ? Colors.brown : Colors.grey,
                       borderRadius: BorderRadius.circular(8),
                     ),
                   ),
