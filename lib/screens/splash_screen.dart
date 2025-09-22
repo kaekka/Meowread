@@ -38,10 +38,10 @@ class _SplashScreenState extends State<SplashScreen>
     _scaleAnim = CurvedAnimation(parent: _controller, curve: Curves.easeOutBack);
     _fadeAnim = CurvedAnimation(parent: _controller, curve: Curves.easeIn);
 
-    // setelah 3 detik pindah ke Welcome
-    Future.delayed(const Duration(seconds: 3), () {
+    // ⬇️ ganti ke onboarding
+    Future.delayed(const Duration(seconds: 4), () {
       if (mounted) {
-        Navigator.pushReplacementNamed(context, '/welcome');
+        Navigator.pushReplacementNamed(context, '/onboarding');
       }
     });
   }
@@ -52,7 +52,6 @@ class _SplashScreenState extends State<SplashScreen>
     super.dispose();
   }
 
-  /// 🐾 Widget Paw Print
   Widget _buildPaw(Alignment alignment, int delay, Color color) {
     return Align(
       alignment: alignment,
@@ -83,7 +82,6 @@ class _SplashScreenState extends State<SplashScreen>
         ),
         child: Stack(
           children: [
-            // 🐾 Generate paw prints full layar
             ...List.generate(pawAlignments.length, (i) {
               final isEven = i % 2 == 0;
               return _buildPaw(
@@ -93,7 +91,6 @@ class _SplashScreenState extends State<SplashScreen>
               );
             }),
 
-            // Logo + teks di tengah
             Center(
               child: ScaleTransition(
                 scale: _scaleAnim,
@@ -118,7 +115,7 @@ class _SplashScreenState extends State<SplashScreen>
                     FadeTransition(
                       opacity: _fadeAnim,
                       child: Text(
-                        "Your cozy cat library",
+                        "By Kaekka",
                         style: GoogleFonts.poppins(
                           fontSize: 14,
                           color: Colors.brown[600],

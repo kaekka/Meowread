@@ -4,7 +4,7 @@ import 'cafe_page.dart';
 import 'cats_page.dart';
 import 'profile_page.dart';
 import 'custom_navbar.dart';
-import 'scan_page.dart'; // ✅ import scanner
+import 'scan_page.dart'; 
 
 class HomeScreen extends StatefulWidget {
   final String email;
@@ -25,13 +25,13 @@ class _HomeScreenState extends State<HomeScreen> {
         ? widget.email.split("@")[0]
         : widget.email;
 
-    final List<Widget> pages = [
-      const BooksPage(),
-      const CafePage(),
-      const CatsPage(),
-      ProfilePage(name: name, email: widget.email), // ✅ pakai widget.email
-    ];
-
+   final List<Widget> pages = [
+        BooksPage(userName: name),   // 🔹 ini sudah cocok
+        const CafePage(),
+        const CatsPage(),
+        ProfilePage(name: name, email: widget.email),
+      ];
+      
     return Scaffold(
       body: pages[_currentIndex],
       bottomNavigationBar: CustomNavbar(

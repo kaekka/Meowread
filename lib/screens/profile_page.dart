@@ -1,15 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'login_screen.dart'; // arahkan ke halaman login
 
 class ProfilePage extends StatelessWidget {
   final String name;
-  final String email; // 👈 tambahkan email
+  final String email;
 
   const ProfilePage({
     super.key,
     required this.name,
-    required this.email, // 👈 wajib isi saat navigasi
+    required this.email,
   });
+
+  Future<void> _logout(BuildContext context) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.clear(); // hapus semua data login
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(builder: (_) => const LoginScreen()),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -45,7 +56,7 @@ class ProfilePage extends StatelessWidget {
                   ),
                   const SizedBox(height: 12),
                   Text(
-                    name, // 👈 nama sesuai login
+                    name,
                     style: GoogleFonts.poppins(
                       color: Colors.white,
                       fontSize: 20,
@@ -53,7 +64,7 @@ class ProfilePage extends StatelessWidget {
                     ),
                   ),
                   Text(
-                    email, // 👈 email sesuai login
+                    email,
                     style: GoogleFonts.poppins(
                       color: Colors.white70,
                       fontSize: 14,
@@ -63,7 +74,6 @@ class ProfilePage extends StatelessWidget {
               ),
             ),
 
-            
             const SizedBox(height: 20),
 
             // Statistik
@@ -106,7 +116,7 @@ class ProfilePage extends StatelessWidget {
 
             const SizedBox(height: 20),
 
-            // Bagian General
+            // Bagian General + Logout
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16),
               child: Column(
@@ -115,6 +125,22 @@ class ProfilePage extends StatelessWidget {
                   _buildMenuItem("Change Password", Icons.lock),
                   _buildMenuItem("Notification", Icons.notifications),
                   _buildMenuItem("Transaction History", Icons.receipt_long),
+
+                  // 👉 Tambahkan Logout di paling bawah
+                  ListTile(
+                    contentPadding: const EdgeInsets.symmetric(
+                        vertical: 2, horizontal: 8),
+                    leading: const Icon(Icons.logout, color: Colors.red),
+                    title: Text(
+                      "Logout",
+                      style: GoogleFonts.poppins(
+                        fontSize: 15,
+                        fontWeight: FontWeight.w500,
+                        color: Colors.red,
+                      ),
+                    ),
+                    onTap: () => _logout(context),
+                  ),
                 ],
               ),
             ),

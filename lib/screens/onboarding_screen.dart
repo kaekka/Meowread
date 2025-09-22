@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 class OnboardingScreen extends StatefulWidget {
-  final String email;
-  const OnboardingScreen({super.key, required this.email});
+  const OnboardingScreen({super.key});
 
   @override
   State<OnboardingScreen> createState() => _OnboardingScreenState();
@@ -33,15 +32,6 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
       "image": "assets/pustakapaw.jpg"
     },
   ];
-
-  // ✅ Ambil nama dari email
-  String getUserName() {
-    String name = widget.email.split("@")[0];
-    if (name.isNotEmpty) {
-      return name[0].toUpperCase() + name.substring(1);
-    }
-    return "User";
-  }
 
   // ✅ Tentukan ucapan selamat berdasarkan jam
   String getGreeting() {
@@ -89,7 +79,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
           ),
           child: Column(
             children: [
-              // ✅ Greeting bar full width
+              // ✅ Greeting bar tanpa email, pakai "member"
               Container(
                 width: double.infinity,
                 padding:
@@ -97,7 +87,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                 color: Colors.brown,
                 child: Center(
                   child: Text(
-                    "${getGreeting()}, ${getUserName()} 👋",
+                    "${getGreeting()}, Member 👋",
                     style: const TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.w600,
@@ -222,8 +212,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                   onPressed: () {
                     Navigator.pushReplacementNamed(
                       context,
-                      "/home",
-                      arguments: widget.email,
+                      "/welcome",
                     );
                   },
                   style: ElevatedButton.styleFrom(

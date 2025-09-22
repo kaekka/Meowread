@@ -17,6 +17,11 @@ class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passController = TextEditingController();
 
+  bool isValidEmail(String email) {
+    final emailRegex = RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$');
+    return emailRegex.hasMatch(email);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -125,6 +130,28 @@ class _LoginScreenState extends State<LoginScreen> {
                     final email = emailController.text.trim();
                     final pass = passController.text.trim();
 
+                    // ✅ Validasi input
+                    if (email.isEmpty) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(content: Text("Email tidak boleh kosong!")),
+                      );
+                      return;
+                    }
+
+                    if (!isValidEmail(email)) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(content: Text("Format email tidak valid!")),
+                      );
+                      return;
+                    }
+
+                    if (pass.isEmpty) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(content: Text("Password tidak boleh kosong!")),
+                      );
+                      return;
+                    }
+
                     final authService = context.read<AuthService>();
                     final success = await authService.login(email, pass);
 
@@ -138,16 +165,15 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                       );
 
-                      // arahkan ke onboarding (bawa email ke arguments)
                       Navigator.pushReplacementNamed(
                         context,
-                        '/onboarding',
+                        '/home',
                         arguments: email,
                       );
                     } else {
                       ScaffoldMessenger.of(context).showSnackBar(
                         const SnackBar(
-                          content: Text("Email atau Password salah!"),
+                          content: Text("Kamu belum punya akun, silakan register."),
                         ),
                       );
                     }

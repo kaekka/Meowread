@@ -13,8 +13,7 @@ void main() {
   runApp(
     MultiProvider(
       providers: [
-        // kalau AuthService bukan ChangeNotifier, ganti ke Provider biasa
-        Provider(create: (_) => AuthService()), 
+        Provider(create: (_) => AuthService()),
         ChangeNotifierProvider(create: (_) => UserProvider()),
       ],
       child: const MyApp(),
@@ -36,17 +35,14 @@ class MyApp extends StatelessWidget {
         switch (settings.name) {
           case '/splash':
             return MaterialPageRoute(builder: (_) => const SplashScreen());
+          case '/onboarding':
+            return MaterialPageRoute(builder: (_) => const OnboardingScreen());
           case '/welcome':
             return MaterialPageRoute(builder: (_) => const WelcomeScreen());
           case '/login':
             return MaterialPageRoute(builder: (_) => const LoginScreen());
           case '/register':
             return MaterialPageRoute(builder: (_) => const RegisterScreen());
-          case '/onboarding':
-            final email = settings.arguments as String;
-            return MaterialPageRoute(
-              builder: (_) => OnboardingScreen(email: email),
-            );
           case '/home':
             final email = settings.arguments as String;
             return MaterialPageRoute(

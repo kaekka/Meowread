@@ -122,7 +122,7 @@ class CafePage extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: Colors.white,
         elevation: 0,
-        title: const Text("Bonjour,\nMeachil Salan",
+        title: const Text("Mengmam disni, Pesan. Langsung Antar!!",
             style: TextStyle(
                 color: Colors.black, fontSize: 18, fontWeight: FontWeight.bold)),
         actions: [

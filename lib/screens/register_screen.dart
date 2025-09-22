@@ -14,6 +14,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passController = TextEditingController();
 
+  bool isValidEmail(String email) {
+    final emailRegex = RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$');
+    return emailRegex.hasMatch(email);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -58,6 +63,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 const SizedBox(height: 20),
                 TextField(
                   controller: emailController,
+                  keyboardType: TextInputType.emailAddress, // ✅ keyboard email
                   decoration: InputDecoration(
                     labelText: "Email",
                     prefixIcon: const Icon(Icons.email, color: Colors.brown),
@@ -88,8 +94,30 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     ),
                   ),
                   onPressed: () async {
-                    final email = emailController.text;
-                    final pass = passController.text;
+                    final email = emailController.text.trim();
+                    final pass = passController.text.trim();
+
+                    // ✅ Validasi input
+                    if (email.isEmpty) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(content: Text("Email tidak boleh kosong!")),
+                      );
+                      return;
+                    }
+
+                    if (!isValidEmail(email)) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(content: Text("Format email tidak valid!")),
+                      );
+                      return;
+                    }
+
+                    if (pass.isEmpty) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(content: Text("Password tidak boleh kosong!")),
+                      );
+                      return;
+                    }
 
                     final authService = context.read<AuthService>();
                     final success = await authService.register(email, pass);
@@ -97,14 +125,15 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     if (success) {
                       ScaffoldMessenger.of(context).showSnackBar(
                         const SnackBar(
-                            content: Text(
-                                "Registrasi berhasil! Silakan login.")),
+                          content: Text("Registrasi berhasil! Silakan login."),
+                        ),
                       );
                       Navigator.pushReplacementNamed(context, '/login');
                     } else {
                       ScaffoldMessenger.of(context).showSnackBar(
                         const SnackBar(
-                            content: Text("Email sudah terdaftar!")),
+                          content: Text("Email sudah terdaftar!"),
+                        ),
                       );
                     }
                   },

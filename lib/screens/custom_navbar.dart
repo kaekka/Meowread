@@ -15,49 +15,55 @@ class CustomNavbar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.all(16),
-      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
-      decoration: BoxDecoration(
-        color: Colors.brown, // ✅ warna coklat
-        borderRadius: BorderRadius.circular(30),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.brown.withOpacity(0.3),
-            blurRadius: 10,
-            offset: const Offset(0, 5),
-          ),
-        ],
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
-        children: [
-          _navItem(Icons.grid_view, 0),
-          _navItem(Icons.coffee, 1),
-
-          // 🔹 Tombol Scan di tengah
-          GestureDetector(
-            onTap: onScanTap,
-            child: Container(
-              padding: const EdgeInsets.all(12),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                shape: BoxShape.circle,
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black.withOpacity(0.2),
-                    blurRadius: 8,
-                    offset: const Offset(0, 4),
-                  ),
-                ],
-              ),
-              child: Icon(Icons.qr_code_scanner,
-                  size: 30, color: Colors.brown),
+      margin: const EdgeInsets.all(16), // ✅ floating
+      color: Colors.transparent, // ✅ luar transparan
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+        decoration: BoxDecoration(
+          color: Colors.brown, // ✅ warna navbar
+          borderRadius: BorderRadius.circular(30),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.2),
+              blurRadius: 12,
+              offset: const Offset(0, 6),
             ),
-          ),
+          ],
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: [
+            _navItem(Icons.grid_view, 0),
+            _navItem(Icons.coffee, 1),
 
-          _navItem(Icons.pets, 2),
-          _navItem(Icons.person, 3),
-        ],
+            // 🔹 Tombol Scan di tengah
+            GestureDetector(
+              onTap: onScanTap,
+              child: Container(
+                padding: const EdgeInsets.all(12),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  shape: BoxShape.circle,
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.2),
+                      blurRadius: 8,
+                      offset: const Offset(0, 4),
+                    ),
+                  ],
+                ),
+                child: const Icon(
+                  Icons.qr_code_scanner,
+                  size: 30,
+                  color: Colors.brown,
+                ),
+              ),
+            ),
+
+            _navItem(Icons.pets, 2),
+            _navItem(Icons.person, 3),
+          ],
+        ),
       ),
     );
   }

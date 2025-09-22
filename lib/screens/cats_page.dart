@@ -1,5 +1,79 @@
 import 'package:flutter/material.dart';
+import 'CatDetailPage.dart';
 
+class Cat {
+  final String _name;
+  final String _age;
+  final String _mood;
+  final String _image;
+  final String _description;
+  final List<String> _extraPhotos;
+
+  Cat(
+    this._name,
+    this._age,
+    this._mood,
+    this._image,
+    this._description,
+    this._extraPhotos,
+  );
+
+  // Getter → enkapsulasi
+  String get name => _name;
+  String get age => _age;
+  String get mood => _mood;
+  String get image => _image;
+  String get description => _description;
+  List<String> get extraPhotos => _extraPhotos;
+
+  // Default kategori → dioverride oleh subclass
+  String get category => "Kucing Umum";
+}
+
+// Subclass sesuai kategori (inheritance + polymorphism)
+class CampusCat extends Cat {
+  CampusCat(
+    String name,
+    String age,
+    String mood,
+    String image,
+    String description,
+    List<String> extraPhotos,
+  ) : super(name, age, mood, image, description, extraPhotos);
+
+  @override
+  String get category => "Kucing Kampus";
+}
+
+class LocalCat extends Cat {
+  LocalCat(
+    String name,
+    String age,
+    String mood,
+    String image,
+    String description,
+    List<String> extraPhotos,
+  ) : super(name, age, mood, image, description, extraPhotos);
+
+  @override
+  String get category => "Kucing Lokal";
+}
+
+class OtherCat extends Cat {
+  OtherCat(
+    String name,
+    String age,
+    String mood,
+    String image,
+    String description,
+    List<String> extraPhotos,
+  ) : super(name, age, mood, image, description, extraPhotos);
+
+  @override
+  String get category => "Kucing Kucingan";
+}
+
+// Halaman utama
 class CatsPage extends StatefulWidget {
   const CatsPage({super.key});
 
@@ -8,98 +82,234 @@ class CatsPage extends StatefulWidget {
 }
 
 class _CatsPageState extends State<CatsPage> {
-  String? selectedCat;
+  String searchQuery = "";
+  String selectedCategory = "All";
 
-  // Daftar kucing dengan foto
-  final List<Map<String, String>> cats = [
-    {"name": "Mochi", "age": "2 tahun", "mood": "Playful", "image": "assets/cats/mochi.png"},
-    {"name": "Choco", "age": "1 tahun", "mood": "Pemalu", "image": "assets/cats/choco.png"},
-    {"name": "Luna", "age": "3 tahun", "mood": "Suka tidur", "image": "assets/cats/luna.png"},
-    {"name": "Oreo", "age": "2 tahun", "mood": "Aktif", "image": "assets/cats/oreo.png"},
-    {"name": "Mimi", "age": "4 bulan", "mood": "Manja", "image": "assets/cats/mimi.png"},
-    {"name": "Tiger", "age": "5 tahun", "mood": "Kalem", "image": "assets/cats/tiger.png"},
+  final List<String> categories = [
+    "All",
+    "Kucing Kampus",
+    "Kucing Lokal",
+    "Kucing Kucingan",
+  ];
+
+  // List kucing 
+  final List<Cat> cats = [
+    CampusCat(
+      "Mana Tahan",
+      "2 tahun",
+      "Playful",
+      "assets/wlee.jpg",
+      "Kucing ini sangat aktif dan suka bermain di sekitar kampus. "
+          "Ia ramah dengan orang baru dan selalu mencari perhatian 🐾.",
+      [
+        "assets/wlee.jpg",
+      ],
+    ),
+    LocalCat(
+      "Gosong",
+      "1 tahun",
+      "Nakal",
+      "assets/gosong.jpg",
+      "Kucing kecil dengan bulu hitam legam. "
+          "Meski nakal, ia sangat menggemaskan dan suka berlari-lari.",
+      [
+        "assets/gosong.jpg",
+      ],
+    ),
+    LocalCat(
+      "Bobby",
+      "3 tahun",
+      "Suka tidur",
+      "assets/bobby.jpg",
+      "Bobby sangat santai. Hobinya tidur di tempat yang hangat "
+          "dan suka dipangku saat sore hari.",
+      [
+        "assets/bobby.jpg",
+      ],
+    ),
+    LocalCat(
+      "Shepy",
+      "3 tahun",
+      "Amimir",
+      "assets/shepy.jpg",
+      "Kucing ini suka menyendiri, jarang terlihat, tapi sekali muncul jadi pusat perhatian.",
+      [
+        "assets/shepy.jpg",
+      ],
+    ),
   ];
 
   @override
   Widget build(BuildContext context) {
+    final filteredCats = cats.where((cat) {
+      final matchesSearch =
+          cat.name.toLowerCase().contains(searchQuery.toLowerCase());
+      final matchesCategory =
+          selectedCategory == "All" || cat.category == selectedCategory;
+      return matchesSearch && matchesCategory;
+    }).toList();
+
     return Scaffold(
+      backgroundColor: Colors.brown[50],
       appBar: AppBar(
-        title: const Text("Tambah Profil Kucing"),
-        backgroundColor: Colors.brown,
+        title: const Text(
+          "Pustakapawmu ",
+          style: TextStyle(fontWeight: FontWeight.bold),
+        ),
+        centerTitle: true,
+        backgroundColor: const Color.fromRGBO(121, 85, 72, 1),
+        elevation: 0,
       ),
       body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Padding(
-            padding: EdgeInsets.all(16),
-            child: Text(
-              "Pilih kucingmu 🐾",
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+          // Search bar
+          Padding(
+            padding: const EdgeInsets.all(12),
+            child: TextField(
+              decoration: InputDecoration(
+                prefixIcon: const Icon(Icons.search, color: Colors.brown),
+                hintText: "Cari kucing kesayanganmu...",
+                filled: true,
+                fillColor: Colors.white,
+                contentPadding: const EdgeInsets.symmetric(vertical: 14),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(30),
+                  borderSide: BorderSide.none,
+                ),
+              ),
+              onChanged: (value) {
+                setState(() {
+                  searchQuery = value;
+                });
+              },
             ),
           ),
 
-          // Grid daftar kucing
-          Expanded(
-            child: GridView.builder(
+          // Bar Kategori (?)
+          SizedBox(
+            height: 50,
+            child: ListView.separated(
+              scrollDirection: Axis.horizontal,
               padding: const EdgeInsets.symmetric(horizontal: 16),
-              itemCount: cats.length,
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2,
-                mainAxisSpacing: 16,
-                crossAxisSpacing: 16,
-                childAspectRatio: 0.9,
-              ),
+              itemCount: categories.length,
+              separatorBuilder: (_, __) => const SizedBox(width: 8),
               itemBuilder: (context, index) {
-                final cat = cats[index];
-                final isSelected = selectedCat == cat["name"];
-                return GestureDetector(
-                  onTap: () {
-                    setState(() {
-                      selectedCat = cat["name"];
-                    });
-                  },
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: isSelected ? Colors.brown[200] : Colors.brown[50],
-                      borderRadius: BorderRadius.circular(16),
-                      border: Border.all(
-                        color: isSelected ? Colors.brown : Colors.transparent,
-                        width: 2,
-                      ),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.grey.withOpacity(0.2),
-                          blurRadius: 5,
-                          offset: const Offset(0, 3),
-                        ),
-                      ],
-                    ),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        ClipRRect(
-                          borderRadius: BorderRadius.circular(12),
-                          child: Image.asset(
-                            cat["image"]!,
-                            height: 80,
-                            width: 80,
-                            fit: BoxFit.cover,
-                          ),
-                        ),
-                        const SizedBox(height: 10),
-                        Text(
-                          cat["name"] ?? "",
-                          style: const TextStyle(fontWeight: FontWeight.bold),
-                        ),
-                        const SizedBox(height: 4),
-                        Text(cat["age"] ?? "", style: const TextStyle(fontSize: 12)),
-                        Text(cat["mood"] ?? "", style: const TextStyle(fontSize: 12, color: Colors.brown)),
-                      ],
+                final category = categories[index];
+                final isSelected = selectedCategory == category;
+                return ChoiceChip(
+                  label: Text(
+                    category,
+                    style: TextStyle(
+                      color: isSelected ? Colors.white : Colors.brown[800],
+                      fontWeight: FontWeight.w600,
                     ),
                   ),
+                  selected: isSelected,
+                  onSelected: (_) {
+                    setState(() {
+                      selectedCategory = category;
+                    });
+                  },
+                  selectedColor: const Color.fromRGBO(121, 85, 72, 1),
+                  backgroundColor: Colors.brown[100],
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  elevation: 3,
                 );
               },
             ),
+          ),
+
+          const SizedBox(height: 10),
+
+          Expanded(
+            child: filteredCats.isEmpty
+                ? const Center(
+                    child: Text(
+                      "Tidak ada kucing ditemukan 🐱",
+                      style: TextStyle(fontSize: 16, color: Colors.brown),
+                    ),
+                  )
+                : GridView.builder(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 16, vertical: 8),
+                    itemCount: filteredCats.length,
+                    gridDelegate:
+                        const SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2,
+                      mainAxisSpacing: 16,
+                      crossAxisSpacing: 16,
+                      childAspectRatio: 0.75,
+                    ),
+                    itemBuilder: (context, index) {
+                      final cat = filteredCats[index];
+                      return GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            PageRouteBuilder(
+                              pageBuilder: (_, __, ___) =>
+                                  CatDetailPage(cat: cat),
+                              transitionsBuilder: (context, animation,
+                                  secondaryAnimation, child) {
+                                const begin = Offset(0.0, 1.0);
+                                const end = Offset.zero;
+                                const curve = Curves.easeInOut;
+                                final tween = Tween(begin: begin, end: end)
+                                    .chain(CurveTween(curve: curve));
+                                return SlideTransition(
+                                  position: animation.drive(tween),
+                                  child: child,
+                                );
+                              },
+                            ),
+                          );
+                        },
+                        child: AnimatedContainer(
+                          duration: const Duration(milliseconds: 300),
+                          curve: Curves.easeInOut,
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(20),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.brown.withOpacity(0.2),
+                                blurRadius: 8,
+                                offset: const Offset(0, 4),
+                              ),
+                            ],
+                          ),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Hero(
+                                tag: cat.image,
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(16),
+                                  child: Image.asset(
+                                    cat.image,
+                                    height: 140,
+                                    width: 140,
+                                    fit: BoxFit.cover,
+                                  ),
+                                ),
+                              ),
+                              const SizedBox(height: 10),
+                              Text(
+                                cat.name,
+                                style: const TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 16,
+                                ),
+                                textAlign: TextAlign.center,
+                              ),
+                            ],
+                          ),
+                        ),
+                      );
+                    },
+                  ),
           ),
         ],
       ),
