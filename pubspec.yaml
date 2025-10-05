@@ -30,6 +30,9 @@ dependencies:
   mobile_scanner: ^6.0.2
   cupertino_icons: ^1.0.8
   google_fonts: ^6.3.1
+  device_info_plus: ^9.1.2
+  webview_flutter: ^4.7.0
+  # getwidget: ^4.0.0 # Hapus atau komentari ini
 
 dev_dependencies:
   flutter_test:
@@ -45,12 +48,7 @@ flutter:
 
   assets:
     - assets/Logo.png
-    - assets/pustakapaw.jpg
-    - assets/mam.jpg
-    - assets/meng.jpg
-    - assets/Cat.jpg
-    - assets/wlee.jpg
-    - assets/gosong.jpg
-    - assets/bobby.jpg
-    - assets/shepy.jpg
-
+    - assets/books/
+    - assets/menu/food/
+    - assets/menu/drink/
+    - assets/cats/
