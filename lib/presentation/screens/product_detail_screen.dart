@@ -26,7 +26,7 @@ class ProductDetailScreen extends StatelessWidget {
             iconTheme: IconThemeData(color: theme.colorScheme.onBackground),
             flexibleSpace: FlexibleSpaceBar(
               background: Hero(
-                tag: product.image, // Hero animation tag
+                tag: product.image, 
                 child: product.image.startsWith('http')
                     ? Image.network(product.image, fit: BoxFit.cover)
                     : Image.asset(product.image, fit: BoxFit.cover),
@@ -39,7 +39,7 @@ class ProductDetailScreen extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  // Nama Produk dan Harga
+                  
                   Text(
                     product.name,
                     style: theme.textTheme.headlineSmall?.copyWith(
@@ -56,7 +56,7 @@ class ProductDetailScreen extends StatelessWidget {
                   ),
                   const SizedBox(height: 24),
 
-                  // Deskripsi
+                  
                   Text(
                     "Deskripsi",
                     style: theme.textTheme.titleLarge?.copyWith(
@@ -69,14 +69,14 @@ class ProductDetailScreen extends StatelessWidget {
                     textAlign: TextAlign.justify,
                     style: theme.textTheme.bodyMedium?.copyWith(height: 1.5),
                   ),
-                  const SizedBox(height: 120), // Spacer for button
+                  const SizedBox(height: 120), 
                 ],
               ),
             ),
           ),
         ],
       ),
-      // Tombol Tambah ke Keranjang
+      
       bottomSheet: Container(
         padding: const EdgeInsets.all(16.0),
         width: double.infinity,

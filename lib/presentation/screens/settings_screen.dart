@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:device_info_plus/device_info_plus.dart'; // Tambahkan ini
+import 'package:device_info_plus/device_info_plus.dart'; 
 import 'package:apktes1/app/data/providers/theme_provider.dart';
 
 class SettingsScreen extends StatefulWidget {
@@ -43,7 +43,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
     setState(() {
       _selectedLanguage = language;
     });
-    // Logika untuk mengubah bahasa aplikasi secara global bisa ditambahkan di sini
   }
 
   void _showLanguageDialog() {
@@ -76,7 +75,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
     );
   }
 
-  // Fungsi baru untuk menampilkan informasi perangkat
   void _showDeviceInfo() async {
     final DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
     String info = "Tidak dapat mengambil info perangkat.";
@@ -97,10 +95,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
       } else if (Theme.of(context).platform == TargetPlatform.linux) {
         LinuxDeviceInfo linuxInfo = await deviceInfo.linuxInfo;
         info = "Linux:\nNama ID: ${linuxInfo.id}\nNama Pretty: ${linuxInfo.prettyName}\nVersi: ${linuxInfo.version}";
-      } else if (Theme.of(context).platform == TargetPlatform.fuchsia) {
-        // Fuchsia tidak memiliki DeviceInfoPlugin yang spesifik
+      } else if (Theme.of(context).platform == TargetPlatform.fuchsia) { 
         info = "Fuchsia: Informasi tidak tersedia.";
-      } else { // Untuk web atau platform lain yang tidak spesifik
+      } else { 
         WebBrowserInfo webBrowserInfo = await deviceInfo.webBrowserInfo;
         info = "Web Browser:\nNama Browser: ${webBrowserInfo.browserName.name}\nVersi: ${webBrowserInfo.appVersion}\nPlatform: ${webBrowserInfo.platform}";
       }
@@ -167,7 +164,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
             title: const Text("Info Perangkat"),
             subtitle: const Text("Lihat detail perangkat Anda"),
             leading: Icon(Icons.info_outline, color: colorScheme.primary),
-            onTap: _showDeviceInfo, // Panggil fungsi ini saat di-tap
+            onTap: _showDeviceInfo, 
           ),
         ],
       ),

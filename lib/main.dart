@@ -15,7 +15,6 @@ import 'package:apktes1/presentation/screens/onboarding_screen.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
-  // Semua baris inisialisasi WebView yang menyebabkan error telah dihapus.
 
   runApp(
     MultiProvider(

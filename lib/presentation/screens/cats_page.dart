@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:apktes1/app/data/models/cat.dart';
 import 'package:apktes1/presentation/screens/CatDetailPage.dart';
 
-// Halaman utama
+
 class CatsPage extends StatefulWidget {
   const CatsPage({super.key});
 
@@ -97,7 +97,6 @@ class _CatsPageState extends State<CatsPage> {
       "Kucing kampus yang paling tua dan bijaksana. Sering terlihat duduk tenang di perpustakaan kampus.",
       ["assets/cats/gosong.jpg"],
     ),
-    // --- Kucing Baru Ditambahkan dari assets/cats/ --- //
     LocalCat(
       "Cuki",
       "1.5 tahun",
@@ -196,12 +195,12 @@ class _CatsPageState extends State<CatsPage> {
           style: TextStyle(fontWeight: FontWeight.bold),
         ),
         centerTitle: true,
-        backgroundColor: theme.primaryColor, // Menggunakan warna dari tema
+        backgroundColor: theme.primaryColor, 
         elevation: 0,
       ),
       body: Column(
         children: [
-          // Search bar
+          
           Padding(
             padding: const EdgeInsets.all(12),
             child: TextField(
@@ -224,7 +223,7 @@ class _CatsPageState extends State<CatsPage> {
             ),
           ),
 
-          // Bar Kategori
+          
           SizedBox(
             height: 50,
             child: ListView.separated(

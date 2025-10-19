@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:apktes1/app/data/models/cat.dart';
 import 'package:intl/intl.dart';
 
 class OnboardingScreen extends StatefulWidget {
@@ -17,23 +18,23 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
       "title": "Pustakapaw",
       "subtitle":
           "mau konsultasi dengan profesor kita? nikmati pelayanan terbaik dari kami!",
-      "image": "assets/meng.jpg"
+      "image": "assets/cats/meng.jpg"
     },
     {
       "title": "Mengmam",
       "subtitle":
           "kamu mau nikmati kopi hangat dan camilan favorit? tinggal pesan saja nanti diantar",
-      "image": "assets/mam.jpg"
+      "image": "assets/cats/mam.jpg"
     },
     {
       "title": "Meowread",
       "subtitle":
           "lihat buku apa saja yang sudah kamu baca!! pinjam buku kesukaanmu dengan mudah cuman di MEOWREAD aja!!",
-      "image": "assets/pustakapaw.jpg"
+      "image": "assets/cats/pustakapaw.jpg"
     },
   ];
 
-  // ✅ Tentukan ucapan selamat berdasarkan jam
+  
   String getGreeting() {
     int hour = int.parse(DateFormat('HH').format(DateTime.now()));
     if (hour >= 4 && hour < 12) {
@@ -79,25 +80,24 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
           ),
           child: Column(
             children: [
-              // ✅ Greeting bar tanpa email, pakai "member"
+
               Container(
                 width: double.infinity,
-                padding:
-                    const EdgeInsets.symmetric(vertical: 16, horizontal: 20),
+                padding: const EdgeInsets.symmetric(vertical: 24, horizontal: 20), 
                 color: Colors.brown,
                 child: Center(
                   child: Text(
                     "${getGreeting()}, Member 👋",
                     style: const TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.w600,
+                      fontSize: 26, 
+                      fontWeight: FontWeight.bold,
                       color: Colors.white,
+                      letterSpacing: 1.2, 
                     ),
                   ),
                 ),
               ),
-
-              // ✅ PageView dengan tombol panah
+              
               Expanded(
                 child: Stack(
                   children: [
@@ -153,7 +153,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                       },
                     ),
 
-                    // ✅ Tombol kiri
+                    
                     Positioned(
                       left: 10,
                       top: MediaQuery.of(context).size.height * 0.25,
@@ -168,7 +168,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                       ),
                     ),
 
-                    // ✅ Tombol kanan
+                    
                     Positioned(
                       right: 10,
                       top: MediaQuery.of(context).size.height * 0.25,
@@ -186,7 +186,6 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                 ),
               ),
 
-              // ✅ Dots indicator
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: List.generate(
@@ -205,26 +204,26 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                 ),
               ),
 
-              // ✅ Tombol Get Started
               Padding(
                 padding: const EdgeInsets.all(20),
                 child: ElevatedButton(
                   onPressed: () {
-                    Navigator.pushReplacementNamed(
-                      context,
-                      "/welcome",
-                    );
+                    Navigator.pushReplacementNamed(context, "/welcome");
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.brown,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(16),
                     ),
-                    minimumSize: const Size(double.infinity, 50),
+                    minimumSize: const Size(double.infinity, 80), 
                   ),
                   child: const Text(
                     "Get Started",
-                    style: TextStyle(fontSize: 18, color: Colors.white),
+                    style: TextStyle(
+                      fontSize: 22, 
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                    ),
                   ),
                 ),
               ),

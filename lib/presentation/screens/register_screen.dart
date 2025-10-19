@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:apktes1/app/services/auth_service.dart';
-import 'package:apktes1/presentation/screens/login_screen.dart'; // Import LoginScreen
+import 'package:apktes1/presentation/screens/login_screen.dart'; 
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
@@ -30,7 +30,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
           style: GoogleFonts.poppins(
               color: Colors.white, fontWeight: FontWeight.bold),
         ),
-        backgroundColor: Colors.brown[700],
+        backgroundColor: const Color(0xFF5D4037),
         elevation: 0,
         iconTheme: const IconThemeData(color: Colors.white),
       ),
@@ -64,7 +64,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 const SizedBox(height: 20),
                 TextField(
                   controller: emailController,
-                  keyboardType: TextInputType.emailAddress, // ✅ keyboard email
+                  keyboardType: TextInputType.emailAddress, 
                   decoration: InputDecoration(
                     labelText: "Email",
                     prefixIcon: const Icon(Icons.email, color: Colors.brown),
@@ -98,7 +98,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     final email = emailController.text.trim();
                     final pass = passController.text.trim();
 
-                    // ✅ Validasi input
+                    
                     if (email.isEmpty) {
                       ScaffoldMessenger.of(context).showSnackBar(
                         const SnackBar(content: Text("Email tidak boleh kosong!")),
@@ -128,8 +128,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         const SnackBar(
                           content: Text("Registrasi berhasil! Silakan login."),
                         ),
-                      );
-                      // Perbaikan: Menggunakan pushAndRemoveUntil untuk memastikan halaman login menjadi root baru
+                      );           
                       Navigator.of(context).pushAndRemoveUntil(
                         MaterialPageRoute(builder: (context) => const LoginScreen()),
                         (Route<dynamic> route) => false,

@@ -20,7 +20,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    // ambil nama dari email sebelum tanda @
+    
     final String name = widget.email.contains("@")
         ? widget.email.split("@")[0]
         : widget.email;
@@ -48,7 +48,7 @@ class _HomeScreenState extends State<HomeScreen> {
           );
 
           if (result != null) {
-            // ✅ tampilkan hasil scan ke user
+            
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(content: Text("Barcode hasil: $result")),
             );

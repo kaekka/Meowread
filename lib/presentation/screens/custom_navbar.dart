@@ -18,12 +18,12 @@ class CustomNavbar extends StatelessWidget {
     final colorScheme = theme.colorScheme;
 
     return Container(
-      margin: const EdgeInsets.all(16), // Floating style
+      margin: const EdgeInsets.all(16), 
       color: Colors.transparent,
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
         decoration: BoxDecoration(
-          color: colorScheme.primary, // Use primary color from theme
+          color: colorScheme.primary, 
           borderRadius: BorderRadius.circular(30),
           boxShadow: [
             BoxShadow(
@@ -39,13 +39,13 @@ class CustomNavbar extends StatelessWidget {
             _navItem(context, Icons.grid_view, 0),
             _navItem(context, Icons.coffee, 1),
 
-            // Scan Button
+            
             GestureDetector(
               onTap: onScanTap,
               child: Container(
                 padding: const EdgeInsets.all(12),
                 decoration: BoxDecoration(
-                  color: colorScheme.background, // Use background color from theme
+                  color: colorScheme.background, 
                   shape: BoxShape.circle,
                   boxShadow: [
                     BoxShadow(
@@ -58,7 +58,7 @@ class CustomNavbar extends StatelessWidget {
                 child: Icon(
                   Icons.qr_code_scanner,
                   size: 30,
-                  color: colorScheme.primary, // Use primary color
+                  color: colorScheme.primary, 
                 ),
               ),
             ),
@@ -75,7 +75,7 @@ class CustomNavbar extends StatelessWidget {
     final bool isSelected = currentIndex == index;
     final colorScheme = Theme.of(context).colorScheme;
 
-    // Color for icons on the primary-colored navbar
+    
     final Color iconColor = colorScheme.onPrimary;
 
     return GestureDetector(
@@ -90,7 +90,7 @@ class CustomNavbar extends StatelessWidget {
             width: isSelected ? 20 : 0,
             margin: const EdgeInsets.only(bottom: 6),
             decoration: BoxDecoration(
-              color: iconColor, // Use onPrimary color
+              color: iconColor, 
               borderRadius: BorderRadius.circular(2),
             ),
           ),
@@ -104,7 +104,7 @@ class CustomNavbar extends StatelessWidget {
                 child: Icon(
                   icon,
                   size: 28,
-                  color: isSelected ? iconColor : iconColor.withOpacity(0.7), // Use onPrimary color
+                  color: isSelected ? iconColor : iconColor.withOpacity(0.7), 
                 ),
               );
             },

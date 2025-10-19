@@ -27,7 +27,7 @@ class _LoginScreenState extends State<LoginScreen> {
     return Scaffold(
       backgroundColor: Colors.brown[50],
       appBar: AppBar(
-        backgroundColor: Colors.brown[200],
+        backgroundColor: const Color(0xFFBCAAA4),
         elevation: 0,
         title: Text(
           "Sign In",
@@ -75,7 +75,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
                 const SizedBox(height: 30),
 
-                // Email
+                
                 TextField(
                   controller: emailController,
                   decoration: InputDecoration(
@@ -89,7 +89,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
                 const SizedBox(height: 15),
 
-                // Password
+                
                 TextField(
                   controller: passController,
                   obscureText: _obscureText,
@@ -115,7 +115,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
                 const SizedBox(height: 25),
 
-                // Tombol Login
+                
                 ElevatedButton(
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.brown,
@@ -130,7 +130,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     final email = emailController.text.trim();
                     final pass = passController.text.trim();
 
-                    // ✅ Validasi input
+                    
                     if (email.isEmpty) {
                       ScaffoldMessenger.of(context).showSnackBar(
                         const SnackBar(content: Text("Email tidak boleh kosong!")),
@@ -156,7 +156,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     final success = await authService.login(email, pass);
 
                     if (success) {
-                      // simpan email ke provider biar bisa dipakai global
+                      
                       context.read<UserProvider>().setEmail(email);
 
                       ScaffoldMessenger.of(context).showSnackBar(
@@ -189,7 +189,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
                 const SizedBox(height: 20),
 
-                // Tombol ke Register
+                
                 Center(
                   child: TextButton(
                     onPressed: () {

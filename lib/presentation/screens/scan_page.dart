@@ -17,7 +17,6 @@ class ScanPage extends StatelessWidget {
           for (final barcode in barcodes) {
             debugPrint('Barcode found! ${barcode.rawValue}');
 
-            // ✅ tampilkan hasil dan kembali ke Home
             Navigator.pop(context, barcode.rawValue);
           }
         },
